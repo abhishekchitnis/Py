@@ -3,6 +3,9 @@ Xtra Packages
 
 
 
-Xtra Links / Study MAterials
+Xtra Links / Study Materials
 
 https://www.excel-easy.com/examples/xml.html
+
+ZBar Scripts Path -> (for read_zbar.exe - pyzbar package)
+C:\Users\Abhishek.Chitnis\AppData\Roaming\Python\Python37\Scripts
