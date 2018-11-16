@@ -15,7 +15,14 @@ else:
     with open(file, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
             f.write(chunk)
-driver = webdriver.Chrome(file)
+
+cos = webdriver.ChromeOptions()
+#cos.add_argument('--disable-gpu')
+#cos.add_argument('--kiosk')
+#cos.add_argument('--window-position=0,0')
+cos.add_argument('--disable-infobars');
+			
+driver = webdriver.Chrome(executable_path=file, options=cos)
 driver.maximize_window()
 
 driver.get("http://www.google.com")
@@ -37,3 +44,36 @@ print("\n",stats)
 
 # close the browser window
 driver.quit()
+
+
+'''
+--------------------
+Try This if Warning ChromeDriver
+--------------------
+I just manually created the missing registry key and it stopped logging that.
+
+ @lortegas
+lortegas commented on Jun 18
+Jarmake... How did you do it?
+
+ @gittadesushil
+gittadesushil commented on Jun 18
+Please share the steps to add registry key.
+
+ @jarmake
+jarmake commented on Jun 19 • 
+Ok.
+
+Open registry with regedit (just click on Windows start menu and start typing regedit, it should come up)
+From the registry explorer, expand HKEY_LOCAL_MACHINE, and from there expand SOFTWARE
+Expand Policies.
+I was missing everything from this point.
+So what I had to do was to select the Policies by left clicking on it, and then right click and from the context menu select New > Key and name it Google.
+Once that is created, select that and right click and again select New > Key and name that Chrome.
+Select that folder, and right click. Choose New > String. Name it as MachineLevelUserCloudPolicyEnrollmentToken and leave the value empty.
+If you alreade have Google and Chrome under Policies, I think only adding the key as in step 6 should work. I've attached a picture to show how it should look like when it's done.
+And just as a clarifier. This is under SOFTWARE/Policies, not directly under SOFTWARE.
+--------------------
+https://github.com/SeleniumHQ/selenium/issues/5966
+--------------------
+'''
