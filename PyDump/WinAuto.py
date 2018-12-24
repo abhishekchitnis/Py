@@ -2,9 +2,10 @@ import pyautogui
 
 print(pyautogui.position())
 
-pyautogui.click(131, 751, interval=0.25)
+pyautogui.moveTo(148, 767,0.5)
+pyautogui.click(148, 767, interval=0.25)
 pyautogui.typewrite('Paint', interval=0.1)
-pyautogui.click(127, 208, interval=1.25)
+pyautogui.click(157, 263, interval=1.25)
 
 import pyautogui
 x, y = pyautogui.locateCenterOnScreen('ic.png', grayscale=True)
