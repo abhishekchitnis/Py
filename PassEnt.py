@@ -1,4 +1,7 @@
 # Python program to demonstrate working of 
+
+#Extra Info : //label[text()='Type of Defect: ']//following::span[text()='Functional']
+
 # getpass.getuser() 
 import getpass 
 
