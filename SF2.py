@@ -1,22 +1,23 @@
 '''''''''''''''''''''''
 Python Package Imports
 '''''''''''''''''''''''
-import time
+from time import sleep
 from datetime import datetime
 import os
 import ctypes
-import getpass
+from getpass import getuser
 import requests
 import openpyxl
 from selenium.webdriver.support.ui import Select
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+#from SF2 import driver
 
 '''''''''''''''''''''
 User Input
 '''''''''''''''''''''
-pcnam = getpass.getuser()
+pcnam = getuser()
 print('\nWelcome '+pcnam)
 
 wb = openpyxl.load_workbook("SCOImport.xlsx", data_only=True) 
@@ -32,16 +33,18 @@ if sel>'3' or sel<'1':
 	input("\nPress [ENTER] to Exit")
 	exit()
 '''
+
 '''''''''''''''''''''
 Chrome Driver Loads
 '''''''''''''''''''''
-chrdrv = "C:\\Users\\{0}\\Downloads\\chromedriver.exe".format(pcnam)
-url = "http://www.muhurtnews.com/Abhishek/chromedriver.exe"
+chrdrv = cwdpath+"/chromedriver.exe"
+url = "http://mumbainews24x7.com/Abhishek/chromedriver.exe"
 if Path(chrdrv).is_file():
-	print()
+	print('ChromeDriver Present Continuing')
 else:
+	print('ChromeDriver Absent Downloading')
 	r = requests.get(url, stream = True)
-	with open(file, 'wb') as f:
+	with open(chrdrv, 'wb') as f:
 		for chunk in r.iter_content(chunk_size=1024):
 			f.write(chunk)
 
@@ -75,29 +78,30 @@ except:
 	pass
 
 def Scr():
-	time.sleep(1)
+	sleep(1)
 	driver.save_screenshot("Scrs/"+da+"/"+tim+".png")
 
 '''''''''''''''
 Path
 '''''''''''''''
-path=str(os.getcwd()) #get CWD
-path=path.replace("\\","/") #Replace Path \''/
-	
+cwdpath=str(os.getcwd()) #get CWD
+print(cwdpath)
+cwdpath=cwdpath.replace("\\","/") #Replace Path \''/
+
 '''''''''''''''
 Login / Logout
 '''''''''''''''
 def Login():
 	driver.find_element_by_xpath("//*[@class='form-control username']").send_keys(user)
 	driver.find_element_by_xpath('//*[@value="Submit"]').click()
-	time.sleep(1)
+	sleep(1)
 	driver.find_element_by_xpath("//*[@name='j_password']").send_keys('Pass_123')
 	driver.find_element_by_xpath('//*[@id="Login_button"]').click()
 	Scr()
 
 def Logout():
 	driver.find_element_by_xpath('//*[@id="user-nameco"]').click()
-	time.sleep(1)
+	sleep(1)
 	driver.find_element_by_xpath('/html/body/div[2]/div[2]/div[1]/div[2]/div/div/ul/li[3]/a/span').click()
 
 '''''''''''''''''
@@ -146,7 +150,7 @@ def SCOOdd():
 Py Mains
 """""""""""""""
 driver.get("http://10.135.26.21:8079/siteforge/jsp/login.jsp") # SF URL Load
-time.sleep(1)
+sleep(1)
 
 '''
 '''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -155,11 +159,11 @@ time.sleep(1)
 #Import Site
 user = 'smallcell.admin' #SF Smallcell Outdoor Admin
 Login()
-time.sleep(1)
+sleep(1)
 try:
 	driver.find_element_by_xpath('//*[@id="small_cell_site_data_upload_modal"]').click() # Click Import Site
 	Scr()
-	driver.find_element_by_xpath("//*[@id='fileUploadInput']").send_keys(path+"/SCOImport.xlsx") #Upload File
+	driver.find_element_by_xpath("//*[@id='fileUploadInput']").send_keys(cwdpath+"/SCOImport.xlsx") #Upload File
 	Scr()
 	driver.find_element_by_xpath('//*[@id="small_cell_site_triggerUpload"]').click() # Click Upload # Commented for Uploading
 	Scr()
@@ -167,7 +171,7 @@ try:
 	#Direct ATP 11A
 	driver.find_element_by_xpath('//*[@id="small_cell_atp11A_trigger_data_upload_modal"]').click() # Click ATP Trigger
 	Scr()
-	driver.find_element_by_xpath("//*[@id='fileUploadInput']").send_keys(path+"/SCOATP11A.xlsx") #Upload File
+	driver.find_element_by_xpath("//*[@id='fileUploadInput']").send_keys(cwdpath+"/SCOATP11A.xlsx") #Upload File
 	Scr()
 	driver.find_element_by_xpath("//input[@id='small_cell_atp11A_task_triggerUpload']").click() # Click Upload # Commented for Uploading
 	Scr()
@@ -180,7 +184,7 @@ Logout()
 '''''''''''''''''''''''''''''''''''
 user = 'manoj.kumar' #SF Smallcell Outdoor Lead
 Login()
-time.sleep(1)
+sleep(1)
 driver.find_element_by_xpath('//*[@id="smallcell_out_atp11a_site_li"]/a').click()
 Scr()
 driver.find_element_by_xpath('//*[@id="smallcellOut_atp11A_site_by_name"]').send_keys(sapid)
@@ -213,7 +217,7 @@ Logout()
 '''''''''''''''''''''''''''''''''''
 user = 'amol.gupta' #SF Smallcell Vendor PM
 Login()
-time.sleep(1)
+sleep(1)
 TskSrchSAP()
 
 # Task 1 Equip Inst/Exec ATP11A
@@ -243,9 +247,9 @@ Logout()
 '''''''''''''''''''''''''''''''''''
 user = 'rahul.patidar' #SF Smallcell FE
 Login()
-time.sleep(1)
+sleep(1)
 TskSrchSAP()
-time.sleep(2)
+sleep(2)
 Logout()
 ctypes.windll.user32.MessageBoxExW(0, 'Please Perform FE Task Manually as per Requirement and then Press [OK]', 'Khud Se Bharo', 0x1000)
 
@@ -254,7 +258,7 @@ ctypes.windll.user32.MessageBoxExW(0, 'Please Perform FE Task Manually as per Re
 '''''''''''''''''''''''''''''''''''
 user = 'amol.gupta' #SF Smallcell Vendor PM
 Login()
-time.sleep(1)
+sleep(1)
 TskSrchSAP()
 try:
 	AssOKBtn()
@@ -267,7 +271,7 @@ Logout()
 '''''''''''''''''''''''''''''''''''
 user = 'sachin.gupta' #SF Smallcell Vendor PM
 Login()
-time.sleep(1)
+sleep(1)
 TskSrchSAP()
 try:
 	AssOKBtn()
@@ -280,7 +284,7 @@ Logout()
 '''''''''''''''''''''''''''''''''''
 user = 'manoj.kumar' #SF Smallcell Outdoor Lead
 Login()
-time.sleep(1)
+sleep(1)
 TskSrchSAP()
 try:
 	AssOKBtn()	
