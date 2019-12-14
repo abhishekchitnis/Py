@@ -1,0 +1,6 @@
+Condafied Cmds
+
+1. To install freezed requirements from both PIP or CONDA
+
+$ FOR /F "delims=~" %f in (requirements.txt) DO conda install --yes "%f" || pip install "%f"
+
