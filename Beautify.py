@@ -31,7 +31,6 @@ print("Weight : (in kg) : ", end = '')
 weit=input()
 print(weit)
 
-
 '''''''''''''''
 Path
 '''''''''''''''
@@ -62,7 +61,8 @@ opts.add_argument('disable-infobars')
 opts.add_argument('--ignore-certificate-errors')
 opts.add_argument("--test-type")
 #opts.add_argument("--headless")  
-driver = webdriver.Chrome(options=opts, executable_path=chrdrv)
+
+#driver = webdriver.Chrome(options=opts, executable_path=chrdrv)
 
 """""""""""""""
 Py Functions
@@ -128,9 +128,6 @@ def AttendLinkClick():
 """""""""""""""
 Py Mains
 """""""""""""""
-driver.get("http://10.135.26.21:8079/siteforge/jsp/login.jsp") # SF URL Load
 
-driver.get("http://ess.jio.com")
-sleep(1)
+#driver.get("http://10.135.26.21:8079/siteforge/jsp/login.jsp") # SF URL Load
 
-AttendLinkClick()
