@@ -49,9 +49,32 @@ path="C:\\Users\\Abhishek.Chitnis\Desktop\\Auto\\ACo.xlsx"
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+# 16
 
+#unit test frame work
+import unittest
+from selenium import webdriver
+class searchengineertest(unittest.TestCase):
+
+    def test_google(self):
+        self.driver=webdriver.Chrome("C://Users//asha.colaco//RQM_Utility//RQM_Utility//Library//chromedriver.exe")
+        self.driver.get("https://www.google.com/")
+        print(self.driver.title)
+        self.driver.close()
+
+
+    def test_peace(self):
+        self.driver=webdriver.Chrome("C://Users//asha.colaco//RQM_Utility//RQM_Utility//Library//chromedriver.exe")
+        self.driver.get("https://www.ajio.com/")
+        print(self.driver.title)
+        self.driver.close()
+
+if __name__ =="__main__":
+    unittest.main(argv=[''], verbosity=2, exit=False)
+
+'''
 #15
-
+'''
 def getrowcount():
     workbook=openpyxl.load_workbook(path)
     sheet=workbook.active
