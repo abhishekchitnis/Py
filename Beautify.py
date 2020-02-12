@@ -16,20 +16,39 @@ from selenium.webdriver.chrome.options import Options
 '''''''''''''''''''''
 User Input
 '''''''''''''''''''''
+'''
 pcnam = getuser()
 print('\n# Welcome # To * Informator *\n\nSystem Name Detected : '+pcnam)
-print("\nKindly Share Following Details for Informator to Process the Data and Inform You :) \nYour Full Name : ", end = '')
-fnam=input()
-print(fnam)
-print("Steps Walked FTD : ", end = '')
-staps=input()
-print(staps)
-print("Height (in cm) : ", end = '')
-hait=input()
-print(hait)
-print("Weight : (in kg) : ", end = '')
-weit=input()
-print(weit)
+print("\nKindly Share Following Details for Informator to Process the Data and Inform You")
+print("\nYour Name : ", end = '')
+urnam=input()
+print(urnam)
+'''
+try:
+	aej = 0
+	while not int(aej) in range(1,121):
+		aej = input("Age : ")
+		print(aej)
+	gndr = 1001
+	while not int(gndr) in range(0,2):
+		gndr = input("Gender : Enter 1 if Male or 0 if Female : ")
+		print(gndr)
+	staps = 222222
+	while not int(staps) in range(0,30000):
+		staps = input("Steps Walked throughout the Day : ")
+		print(staps)
+	hait = 0
+	while not int(hait) in range(1,200):
+		hait = input("Height (in cm): ")
+		print(hait)
+	weit = 0
+	while not int(weit) in range(1,300):
+		weit = input("Weight (in kg): ")
+		print(weit)
+
+except:
+	print("Wrong Values Entered! Kindly Re-run the Program and Enter Proper Values")
+	exit()
 
 '''''''''''''''
 Path
@@ -139,3 +158,17 @@ Py Mains
 
 #driver.get("http://10.135.26.21:8079/siteforge/jsp/login.jsp") # SF URL Load
 
+print('\nCalculation in Progress..', end='')
+sleep(1)
+print('..', end='')
+sleep(1)
+print('..', end='')
+sleep(1)
+print('\nAnd the Informator has Informed : ', end='')
+sleep(1)
+cm2m=int(hait)/100
+print(cm2m)
+bmi=round(int(weit)/(cm2m*cm2m),1)
+print('\nBMI : ', bmi, end='')
+print('\nDistance Walked (in Kms) : ', end='')
+print('\nCalories Burned : ', end='')
