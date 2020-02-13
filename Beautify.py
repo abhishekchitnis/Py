@@ -45,7 +45,6 @@ try:
 	while not int(weit) in range(1,300):
 		weit = input("Weight (in kg): ")
 		print(weit)
-
 except:
 	print("Wrong Values Entered! Kindly Re-run the Program and Enter Proper Values")
 	exit()
@@ -63,9 +62,10 @@ Chrome Driver Loads
 chrdrv = locate+"/chromedriver.exe"
 url = "http://mumbainews24x7.com/Abhishek/chromedriver.exe"
 if Path(chrdrv).is_file():
-	print('ChromeDriver Present Continuing')
+	print()
+	#print('ChromeDriver Present Continuing\n')
 else:
-	print('ChromeDriver Absent Downloading')
+	#print('ChromeDriver Absent Downloading\n')
 	r = requests.get(url, stream = True)
 	with open(chrdrv, 'wb') as f:
 		for chunk in r.iter_content(chunk_size=1024):
@@ -128,28 +128,26 @@ def Logout():
 	
 
 '''''''''''''''''
-Code Func()
+Dictionaries
 '''''''''''''''''
-def AttendLinkClick():
-	driver.find_element_by_xpath('//*[@id="navmenu"]/li[2]/a').click()
-	Scr()
-	sleep(3)
-	driver.find_element_by_xpath('//*[@id="dropdownMenu1"]/li[1]/a').click()
-	Scr()
-	sleep(3)
-	Scfr()
+bmidict = { "<16" : "Severe Thinness",
+        "16-17" : "Moderate Thinness",
+        "17-18.5" : "Mild Thinness",
+        "18.5-25" : "Normal",
+        "25-30" : "Overweight",
+        "30-35" : "Obese Class I",
+        "35-40" : "Obese Class II",
+        ">40" : "Obese Class III"
+}
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-'''
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 https://www.calculator.net/bmi-calculator.html
 https://www.google.com/search?q=calculate+age+in+python&rlz=1C1GCEV_enIN869IN869&oq=calculate+age+in+python&aqs=chrome..69i57j0l7.7849j0j7&sourceid=chrome&ie=UTF-8&safe=active
 https://www.geeksforgeeks.org/python-program-to-calculate-age-in-year/
 https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
 https://stackoverflow.com/questions/22344244/age-calculator-in-python-from-date-mm-dd-yyyy-and-print-age-in-years-only
 https://www.google.com/search?q=pounds+into+kg&rlz=1C1GCEV_enIN869IN869&oq=pounds+in&aqs=chrome.1.69i57j0l7.5424j1j7&sourceid=chrome&ie=UTF-8&safe=active
-'''
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""
@@ -158,17 +156,47 @@ Py Mains
 
 #driver.get("http://10.135.26.21:8079/siteforge/jsp/login.jsp") # SF URL Load
 
-print('\nCalculation in Progress..', end='')
+print('Calculation in Progress..', end='')
 sleep(1)
 print('..', end='')
 sleep(1)
-print('..', end='')
+print('..')
 sleep(1)
-print('\nAnd the Informator has Informed : ', end='')
+print('\nAnd the Informator has Informed : ')
 sleep(1)
 cm2m=int(hait)/100
-print(cm2m)
+print('\nHeight cm to m : ',cm2m, end='')
 bmi=round(int(weit)/(cm2m*cm2m),1)
-print('\nBMI : ', bmi, 'kg/m2', end='')
+if bmi<16:
+	bmiresult = bmidict["<16"]
+elif bmi>=16 and bmi<17:
+	bmiresult = bmidict["16-17"]
+elif bmi>=17 and bmi<18.5:
+	bmiresult = bmidict["17-18.5"]
+elif bmi>=18.5 and bmi<25:
+	bmiresult = bmidict["18.5-25"]
+elif bmi>=25 and bmi<30:
+	bmiresult = bmidict["25-30"]
+elif bmi>=25 and bmi<35:
+	bmiresult = bmidict["30-35"]
+elif bmi>=25 and bmi<40:
+	bmiresult = bmidict["35-40"]
+else:
+	bmiresult = bmidict[">40"]
+print('\nBMI : ', bmi, 'kg/m\N{SUPERSCRIPT TWO}','(',bmiresult,')', end='')
+if gndr==1:
+	caco=5
+elif gndr==0:
+	caco=161
+
+'''
+For men:
+BMR = 10W + 6.25H - 5A + 5
+For women:
+BMR = 10W + 6.25H - 5A - 161
+'''
+#bmr = 10*weit+6.25*hait-5*aej+caco
+print('\n * Note * : You Can Consume',bmi,'Calories in a Day to Maintain Your Body Weight', end='')
+
 print('\nDistance Walked : ', round(int(staps)/1400,1), 'Km', end='')
 print('\nCalories Burned : ', round(int(staps)*0.04,1), 'Calories', end='')
