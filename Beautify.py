@@ -200,3 +200,8 @@ print('\n * Note * : You Can Consume',bmi,'Calories in a Day to Maintain Your Bo
 
 print('\nDistance Walked : ', round(int(staps)/1400,1), 'Km', end='')
 print('\nCalories Burned : ', round(int(staps)*0.04,1), 'Calories', end='')
+'''
+Ideal Weight : 
+Male:	50.0 kg + 2.3 kg per inch over 5 feet
+Female:	45.5 kg + 2.3 kg per inch over 5 feet
+'''
