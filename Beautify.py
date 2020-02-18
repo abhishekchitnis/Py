@@ -28,23 +28,18 @@ try:
 	aej = 0
 	while not int(aej) in range(1,121):
 		aej = input("Age : ")
-		print(aej)
 	gndr = 1001
 	while not int(gndr) in range(0,2):
 		gndr = input("Gender : Enter 1 if Male or 0 if Female : ")
-		print(gndr)
 	staps = 222222
 	while not int(staps) in range(0,30000):
 		staps = input("Steps Walked throughout the Day : ")
-		print(staps)
 	hait = 0
 	while not int(hait) in range(1,200):
 		hait = input("Height (in cm): ")
-		print(hait)
 	weit = 0
 	while not int(weit) in range(1,300):
 		weit = input("Weight (in kg): ")
-		print(weit)
 except:
 	print("Wrong Values Entered! Kindly Re-run the Program and Enter Proper Values")
 	exit()
@@ -156,16 +151,15 @@ Py Mains
 
 #driver.get("http://10.135.26.21:8079/siteforge/jsp/login.jsp") # SF URL Load
 
-print('Calculation in Progress..', end='')
-sleep(1)
-print('..', end='')
-sleep(1)
-print('..')
-sleep(1)
-print('\nAnd the Informator has Informed : ')
-sleep(1)
 cm2m=int(hait)/100
-print('\nHeight cm to m : ',cm2m, end='')
+print('Your Height in m is : ',cm2m, end='')
+cm2ft=round(float(hait)/30.48)
+print('\nYour Height in Feet/Inches is : ',cm2ft, end='')
+
+dvd = str(cm2ft).split('.')
+lftdvd = int(dvd[0])
+rgtdvd = int(dvd[1])
+
 bmi=round(int(weit)/(cm2m*cm2m),1)
 if bmi<16:
 	bmiresult = bmidict["<16"]
@@ -184,24 +178,17 @@ elif bmi>=25 and bmi<40:
 else:
 	bmiresult = bmidict[">40"]
 print('\nBMI : ', bmi, 'kg/m\N{SUPERSCRIPT TWO}','(',bmiresult,')', end='')
-if gndr==1:
+if gndr=='1':
 	caco=5
-elif gndr==0:
+	iws=52.0
+	hmw=1.9
+elif gndr=='0':
 	caco=161
-
-'''
-For men:
-BMR = 10W + 6.25H - 5A + 5
-For women:
-BMR = 10W + 6.25H - 5A - 161
-'''
-#bmr = 10*weit+6.25*hait-5*aej+caco
-print('\n * Note * : You Can Consume',bmi,'Calories in a Day to Maintain Your Body Weight', end='')
-
+	iws=45.5
+	hmw=2.2
+bmrf = 10*float(weit) + 6.25*float(hait) - 5*float(aej) + float(caco)
+print('\nBMR Note : You Can Consume',bmrf,'Calories in a Day to Maintain Your Body Weight', end='')
+idwt = round(float(iws) + float(hmw)*float(rgtdvd),1)
+print('\nYour Ideal Weight is : ', idwt, 'Kgs', end='')
 print('\nDistance Walked : ', round(int(staps)/1400,1), 'Km', end='')
 print('\nCalories Burned : ', round(int(staps)*0.04,1), 'Calories', end='')
-'''
-Ideal Weight : 
-Male:	50.0 kg + 2.3 kg per inch over 5 feet
-Female:	45.5 kg + 2.3 kg per inch over 5 feet
-'''
