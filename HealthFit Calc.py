@@ -153,7 +153,9 @@ Py Mains
 
 cm2m=int(hait)/100
 print('Your Height in m is : ',cm2m, end='')
-cm2ft=round(float(hait)/30.48)
+cm2ft=round(float(hait)/30.48,3)
+x=cm2ft-5
+y=x*12
 print('\nYour Height in Feet/Inches is : ',cm2ft, end='')
 
 dvd = str(cm2ft).split('.')
@@ -188,7 +190,7 @@ elif gndr=='0':
 	hmw=2.2
 bmrf = 10*float(weit) + 6.25*float(hait) - 5*float(aej) + float(caco)
 print('\nBMR Note : You Can Consume',bmrf,'Calories in a Day to Maintain Your Body Weight', end='')
-idwt = round(float(iws) + float(hmw)*float(rgtdvd),1)
+idwt = round(float(iws) + float(hmw)*float(y),1)
 print('\nYour Ideal Weight is : ', idwt, 'Kgs', end='')
 print('\nDistance Walked : ', round(int(staps)/1400,1), 'Km', end='')
 print('\nCalories Burned : ', round(int(staps)*0.04,1), 'Calories', end='')
