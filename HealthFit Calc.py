@@ -1,29 +1,19 @@
 '''''''''''''''''''''''
 Python Package Imports
 '''''''''''''''''''''''
-from time import sleep
-from datetime import datetime
-import os
-import ctypes
+import math
 from getpass import getuser
-import requests
-import openpyxl
-from selenium.webdriver.support.ui import Select
-from pathlib import Path
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 '''''''''''''''''''''
 User Input
 '''''''''''''''''''''
-'''
 pcnam = getuser()
-print('\n# Welcome # To * Informator *\n\nSystem Name Detected : '+pcnam)
-print("\nKindly Share Following Details for Informator to Process the Data and Inform You")
+print('\n# Welcome # To * HealthFit Calculator *\n\nSystem Name Detected : '+pcnam)
+print("\nKindly Note : \n1. If Out of Range Values are Submitted then You will be Asked to Enter Them Again")
+print("2. If Wrong Values are Submitted then the Program will Exit and You Have to Re-Run it Again")
 print("\nYour Name : ", end = '')
 urnam=input()
-print(urnam)
-'''
+
 try:
 	aej = 0
 	while not int(aej) in range(1,121):
@@ -44,84 +34,6 @@ except:
 	print("Wrong Values Entered! Kindly Re-run the Program and Enter Proper Values")
 	exit()
 
-'''''''''''''''
-Path
-'''''''''''''''
-locate=str(os.getcwd()) #get CWD
-print('\n'+'Your Current Working Directory is : '+locate)
-#locate=locate.replace("\\","/") #Replace Path \''/
-
-'''''''''''''''''''''
-Chrome Driver Loads
-'''''''''''''''''''''
-chrdrv = locate+"/chromedriver.exe"
-url = "http://mumbainews24x7.com/Abhishek/chromedriver.exe"
-if Path(chrdrv).is_file():
-	print()
-	#print('ChromeDriver Present Continuing\n')
-else:
-	#print('ChromeDriver Absent Downloading\n')
-	r = requests.get(url, stream = True)
-	with open(chrdrv, 'wb') as f:
-		for chunk in r.iter_content(chunk_size=1024):
-			f.write(chunk)
-
-'''''''''''
-Py Drivers
-'''''''''''
-opts = Options()
-opts.add_argument('start-maximized')
-opts.add_argument('disable-infobars')
-opts.add_argument('--ignore-certificate-errors')
-opts.add_argument("--test-type")
-#opts.add_argument("--headless")  
-
-#driver = webdriver.Chrome(options=opts, executable_path=chrdrv)
-
-"""""""""""""""
-Py Functions
-"""""""""""""""
-
-'''''''''
-Screen
-'''''''''
-da=datetime.now().strftime('%a_%d-%b-%y')
-tim=datetime.now().strftime('%H-%M-%S')
-q=1
-try:
-	os.mkdir(r"Scrs")
-except:
-	pass
-try:
-	os.mkdir(r"Scrs/"+da)
-except:
-	pass
-
-def Scr():
-	sleep(1)
-	driver.save_screenshot("Scrs/"+da+"/"+tim+".png")
-
-'''''''''''''''
-Path
-'''''''''''''''
-path=str(os.getcwd()) #get CWD
-path=path.replace("\\","/") #Replace Path \''/
-	
-'''''''''''''''
-Login / Logout
-'''''''''''''''
-def Login():
-	driver.find_element_by_xpath('//*[@id="content-inner"]/form/input[3]').send_keys(domainid)
-	driver.find_element_by_xpath('//*[@id="content-inner"]/form/input[4]').send_keys(password)
-	Scr()
-	driver.find_element_by_xpath('//*[@id="content-inner"]/form/input[5]').click()
-	sleep(5)
-	Scr()
-
-def Logout():
-	print('Yet to Setup')
-	
-
 '''''''''''''''''
 Dictionaries
 '''''''''''''''''
@@ -135,32 +47,16 @@ bmidict = { "<16" : "Severe Thinness",
         ">40" : "Obese Class III"
 }
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-https://www.calculator.net/bmi-calculator.html
-https://www.google.com/search?q=calculate+age+in+python&rlz=1C1GCEV_enIN869IN869&oq=calculate+age+in+python&aqs=chrome..69i57j0l7.7849j0j7&sourceid=chrome&ie=UTF-8&safe=active
-https://www.geeksforgeeks.org/python-program-to-calculate-age-in-year/
-https://stackoverflow.com/questions/2217488/age-from-birthdate-in-python
-https://stackoverflow.com/questions/22344244/age-calculator-in-python-from-date-mm-dd-yyyy-and-print-age-in-years-only
-https://www.google.com/search?q=pounds+into+kg&rlz=1C1GCEV_enIN869IN869&oq=pounds+in&aqs=chrome.1.69i57j0l7.5424j1j7&sourceid=chrome&ie=UTF-8&safe=active
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 """""""""""""""
 Py Mains
 """""""""""""""
-
-#driver.get("http://10.135.26.21:8079/siteforge/jsp/login.jsp") # SF URL Load
-
 cm2m=int(hait)/100
 print('Your Height in m is : ',cm2m, end='')
-cm2ft=round(float(hait)/30.48,3)
-x=cm2ft-5
-y=x*12
-print('\nYour Height in Feet/Inches is : ',cm2ft, end='')
-
-dvd = str(cm2ft).split('.')
-lftdvd = int(dvd[0])
-rgtdvd = int(dvd[1])
+cm2ftin=round(float(hait)/30.48,3)
+cm2indec, cm2ft = math.modf(cm2ftin)
+cm2in=cm2indec*12
+cm2in3=round(float(cm2in),3)
+print('\nYour Height in Feet/Inches is : ',cm2ft,'Feet',cm2in3,'Inches', end='')
 
 bmi=round(int(weit)/(cm2m*cm2m),1)
 if bmi<16:
@@ -190,7 +86,7 @@ elif gndr=='0':
 	hmw=2.2
 bmrf = 10*float(weit) + 6.25*float(hait) - 5*float(aej) + float(caco)
 print('\nBMR Note : You Can Consume',bmrf,'Calories in a Day to Maintain Your Body Weight', end='')
-idwt = round(float(iws) + float(hmw)*float(y),1)
+idwt = round(float(iws) + float(hmw)*float(cm2in3),1)
 print('\nYour Ideal Weight is : ', idwt, 'Kgs', end='')
 print('\nDistance Walked : ', round(int(staps)/1400,1), 'Km', end='')
 print('\nCalories Burned : ', round(int(staps)*0.04,1), 'Calories', end='')
