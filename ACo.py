@@ -4,6 +4,7 @@ import time
 import getpass
 import requests
 import openpyxl
+import unittest
 from pathlib import Path
 from selenium.webdriver.support.ui import Select
 from selenium import webdriver
@@ -43,14 +44,28 @@ opts.add_argument("--test-type")
 
 prefs = {'download.default_directory' : 'C:\\Users\\Abhishek.Chitnis\\Desktop\\Auto'}
 opts.add_experimental_option('prefs', prefs)
-#driver = webdriver.Chrome(options=opts, executable_path=chrdrv)
+driver = webdriver.Chrome(options=opts, executable_path=chrdrv)
 
 path="C:\\Users\\Abhishek.Chitnis\Desktop\\Auto\\ACo.xlsx"
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-# 16
 
+#18
+
+driver.get("https://www.toolsqa.com/automation-practice-table/")
+rows = len(driver.find_elements_by_xpath("//table[@class='tsc_table_s13']/tbody/tr"))
+print(rows)
+#entire = len(driver.find_elements_by_xpath("//table[@class='tsc_table_s13']/tbody/tr/td"))
+
+#17
+'''
+driver.get("https://www.google.com/")
+time.sleep(3)
+driver.save_screenshot("C://Users//Abhishek.Chitnis//Desktop//screenshot.png")
+'''
+# 16
+'''
 #unit test frame work
 import unittest
 from selenium import webdriver
@@ -104,7 +119,7 @@ def writting():
     print(sheet.cell(4,4).value)
     
 writting()
-
+'''
 #14
 '''
 #load the workbook
