@@ -44,20 +44,96 @@ opts.add_argument("--test-type")
 
 prefs = {'download.default_directory' : 'C:\\Users\\Abhishek.Chitnis\\Desktop\\Auto'}
 opts.add_experimental_option('prefs', prefs)
-driver = webdriver.Chrome(options=opts, executable_path=chrdrv)
+#driver = webdriver.Chrome(options=opts, executable_path=chrdrv)
 
 path="C:\\Users\\Abhishek.Chitnis\Desktop\\Auto\\ACo.xlsx"
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-#18
+#23
 
+def num(a,b,c):
+    if sum([a,b,c])<=5:
+        return sum([a,b,c])
+    elif 11 in (a,b,c) and sum([a,b,c]):
+        return (a+b+c)-10
+    else:
+        return "burst"
+asha=num(11,3,1)
+print(asha)
+
+'''
+def act (num):
+    for i in range(0,len(num)-1):
+        if num[i]==3 and num[i+1]==3:
+            return True
+        else:
+            return False
+
+asha=act([3,3,1])
+print(asha)
+'''
+#22
+'''
+asha="i am ready"
+preeti="i am home"
+hey=asha.split()
+new=hey[::-1]
+print(new)
+
+asha="i am"
+new=asha[::-1]
+print(new)
+'''
+#21
+'''
+def word(text):
+    asha=text.split()
+    print(asha)
+
+    #happy
+    st=asha[0]
+    print(st)
+
+    #ending
+    nd=asha[1]
+    print(nd)
+
+    # if h and e
+    if st[0]==nd[0]:
+        return True
+    else:
+        return False
+    
+#out=word("happy hnding")
+print(word("happy hnding"))
+'''
+#20
+'''
+asha=("hi my nae is")
+der=asha.split()
+no=print(der)
+'''
+#19
+'''
+def latin(word):
+    first_word=word[0]
+    if first_word in "aeiou":
+        new= word + "ay"
+    else:
+        new=word[1:]+"ay"
+    return new
+val=latin('word')
+print(val)
+'''
+#18
+'''
 driver.get("https://www.toolsqa.com/automation-practice-table/")
 rows = len(driver.find_elements_by_xpath("//table[@class='tsc_table_s13']/tbody/tr"))
 print(rows)
 #entire = len(driver.find_elements_by_xpath("//table[@class='tsc_table_s13']/tbody/tr/td"))
-
+'''
 #17
 '''
 driver.get("https://www.google.com/")
