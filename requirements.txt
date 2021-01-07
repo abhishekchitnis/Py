@@ -9,7 +9,7 @@ future==0.16.0
 idna==2.7
 jdcal==1.4
 keyboard==0.13.3
-lxml==4.2.5
+lxml==4.6.2
 macholib==1.11
 numpy==1.15.2
 openpyxl==2.5.9
