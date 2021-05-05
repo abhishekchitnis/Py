@@ -1,36 +1,100 @@
 '''''''''''''''''''''''
 Python Package Imports
 '''''''''''''''''''''''
-import time
+from time import sleep
 from datetime import datetime
 import os
+import sys
 import ctypes
-import getpass
+from getpass import getuser
 import requests
+import openpyxl
+from selenium.webdriver.support.ui import Select
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 '''''''''''''''''''''
-User Input
+# User Input
 '''''''''''''''''''''
-pcnam = getpass.getuser()
-print('\nWelcome '+pcnam)
+pcnam = getuser()
+aousrnm = 'Abhishek'
+print('Welcome '+pcnam+' to UMS Automation Script')
+try:
+        aousr = input("Enter [1] for AD User or [2] for OID User : ")
+        if aousr=='1':
+                aousrnm = 'AD User'
+                print("User Selected for Creation is : ", aousrnm)
+        elif aousr=='2':
+                aousrnm = 'OID User'
+                print("User Selected for Creation is : ", aousrnm)
+        else:
+                print("Wrong Values Entered! Kindly Re-run the Program and Enter Proper Values")
+                exit()
+except:
+        exit()
+'''''''''''''''
+# Path
+'''''''''''''''
+cwdpath=str(os.getcwd()) #get CWD
+cwdpath=cwdpath.replace("\\","/") #Replace Path \''/
+
+'''''''''''''''
+# SAP ID Check
+'''''''''''''''
+'''
+wb1 = openpyxl.load_workbook(cwdpath+"/OSC Upload XLs/"+vndr+"/SCOImport"+vndr+".xlsx", data_only=True)
+wb2 = openpyxl.load_workbook(cwdpath+"/OSC Upload XLs/"+vndr+"/SCOATP11A"+vndr+".xlsx", data_only=True)
+if vndor=='1':
+    xln="SCOOddNeoSamsung"
+else:
+    xln="SCOOddAirspan"
+wb3 = openpyxl.load_workbook(cwdpath+"/OSC Upload XLs/"+vndr+"/"+xln+".xlsx", data_only=True)
+wb4 = openpyxl.load_workbook(cwdpath+"/OSC Upload XLs/"+vndr+"/SCOOdd"+vndr+".xlsx", data_only=True)
+
+if wb4['Sheet1']['A2'].value in {wb1['Sheet1']['U2'].value,wb2['Sheet1']['A2'].value,wb3['Sheet1']['A2'].value}:
+    print('SAP IDs in All Excels is Matching... Proceeding...')
+    sapid = wb4['Sheet1']['A2'].value
+else:
+    print('SAP ID in All Excels is MisMatched Kindly Re-run the Program and Enter Proper SAP IDs')
+    exit()    
+
+print("\nSAP ID : "+sapid)
+
+
 print('\nEnter SAP ID: ')
 sapid=input()
+print('\nSelect which Band to Perform: \n\n1. 2300\n2. 1800\n3. 850 \n\nChoose 1/2/3 : ')
+sel=input()
+if sel>'3' or sel<'1':
+	print("\nPlease Choose Between 1 to 3 only")
+	input("\nPress [ENTER] to Exit")
+	exit()
+'''
 
 '''''''''''''''''''''
-Chrome Driver Loads
+# Chrome Driver Loads
 '''''''''''''''''''''
-chrdrv = "C:\\Users\\{0}\\Downloads\\chromedriver.exe".format(pcnam)
-url = "http://www.muhurtnews.com/Abhishek/chromedriver.exe"
+chrdrv = cwdpath+"/chromedriver.exe"
+
 if Path(chrdrv).is_file():
-	print()
+        print('\nChromeDriver Present Continuing')
+
 else:
-	r = requests.get(url, stream = True)
-	with open(file, 'wb') as f:
-		for chunk in r.iter_content(chunk_size=1024):
-			f.write(chunk)
+        print('\nChromeDriver Absent Cannot Continue')
+        print("\nPlease Download ChromeDriver and Place it in your CWD :\n\n"+cwdpath+"/")
+        input('\nPress [ENTER] to Exit')
+        exit()    
+
+'''
+else:
+    print('\nChromeDriver Absent Downloading')
+    url = "http://www.muhurtnews.com/Abhishek/chromedriver.exe"
+    r = requests.get(url, stream = True)
+    with open(chrdrv, 'wb') as f:
+        for chunk in r.iter_content(chunk_size=1024):
+            f.write(chunk)
+'''
 
 '''''''''''
 Py Drivers
@@ -51,184 +115,96 @@ Screen
 '''''''''
 da=datetime.now().strftime('%a_%d-%b-%y')
 tim=datetime.now().strftime('%H-%M-%S')
-q=1
 try:
-	os.mkdir(r"Scrs")
+        os.mkdir(r"Scrs")
 except:
-	pass
+        pass
 try:
-	os.mkdir(r"Scrs/"+da)
+        os.mkdir(r"Scrs/"+da)
 except:
-	pass
+        pass
 
 def Scr():
-	time.sleep(1)
-	driver.save_screenshot("Scrs/"+da+"/"+tim+".png")
-	
+        sleep(1)
+        driver.save_screenshot("Scrs/"+da+"/"+tim+".png")
+
 '''''''''''''''
 Login / Logout
 '''''''''''''''
 def Login():
-	driver.find_element_by_xpath("//*[@class='form-control username']").send_keys(user)
-	driver.find_element_by_xpath('//*[@value="Submit"]').click()
-	time.sleep(1)
-	driver.find_element_by_xpath("//*[@name='j_password']").send_keys('Pass_1234')
-	driver.find_element_by_xpath('//*[@id="Login_button"]').click()
-	Scr()
+        user='Abhishek.Chitnis'
+        driver.find_element_by_xpath('//*[@id="content-inner"]/form/input[3]').send_keys(user)
+        pwd='0%(#arGED'
+        driver.find_element_by_xpath('//*[@id="content-inner"]/form/input[4]').send_keys(pwd)
+        driver.find_element_by_xpath('//*[@id="content-inner"]/form/input[5]').click()
+        sleep(1)
+        Scr()
 
 def Logout():
-	driver.find_element_by_xpath('//*[@id="user-nameco"]').click()
-	time.sleep(1)
-	driver.find_element_by_xpath('/html/body/div[2]/div[2]/div[1]/div[2]/div/div/ul/li[3]/a/span').click()
-	
+        driver.find_element_by_xpath('//*[@id="user-nameco"]').click()
+        sleep(1)
+        driver.find_element_by_xpath('/html/body/div[2]/div[2]/div[1]/div[2]/div/div/ul/li[3]/a/span').click()
+
+'''''''''''''''''
+Code Func()
+'''''''''''''''''
+def AssBtn():
+    driver.find_element_by_xpath('//*[@id="smallcell_out_Atp_11A_task_list_table"]/tbody/tr[2]/td[7]/a').click()
+    Scr()
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""
 Py Mains
 """""""""""""""
-driver.get("http://10.135.26.21:8079/siteforge/jsp/login.jsp")
+driver.get("http://10.135.26.21:8081/ums") # UMS URL Load
+sleep(.5)
 
-'''''''''''''''''''''''''''''''''
-RFI Survey Tasks - Shubhendu.B (CM)
-'''''''''''''''''''''''''''''''''
-user='shubhendu.b'
+'''''''''''''''''''''''''''''''''''''''''''''''''''
+# UMS Create User
+'''''''''''''''''''''''''''''''''''''''''''''''''''
 Login()
-
-driver.find_element_by_xpath('//*[@id="rfi_survey_li"]/a').click()
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiSurveyFrequencyFilter"]').send_keys('2300')
-Scr()
-driver.find_element_by_id('rfiSiteNameForFilter2300').send_keys(sapid)
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiStatusForFilterDiv2300"]/button').click()
-Scr()
+driver.find_element_by_xpath('//*[@id="userFunctionCard"]/div[1]/div/div[2]/a').click()
 try:
-	driver.find_element_by_xpath('//*[@id="rfi_task_div_table_2300"]/tbody/tr/td[7]/a').click()
-	Scr()
-	driver.find_element_by_xpath('//*[@id="rfi_area_manager_2300"]').send_keys('chunnilal')
-	Scr()
-	driver.find_element_by_xpath('//*[@id="assignToAmBtn_2300"]').click() #Commented for Assignment
-	Scr()
-except:
-	pass
-Logout()
+        if aousr==1:
+                driver.find_element_by_xpath('//*[@id="createADUserID"]').send_keys('Abhishek.Chitnis')
+                driver.find_element_by_xpath('//*[@id="userTypeCard"]/div[1]/div/div[2]/div[2]/div/a').click()
+                
+        else:
+                driver.find_element_by_xpath('//*[@id="userTypeCard"]/div[2]/div/div[2]/div/a').click()
+                
+        driver.get("http://10.135.26.21:8079/siteforge/") # UMS URL Load
+        #sleep(.5)
+        driver.find_element_by_xpath('//*[@id="domainSelect"]').send_keys('UBR')
+        driver.find_element_by_xpath('//*[@id="loginSubmitBtn"]').click()
+        ctypes.windll.user32.MessageBoxExW(0, 'Please Perform FE Task Manually as per Requirement and then Press [OK]', 'Khud Se Bharo', 0x1000)
+                
+        
+except Exception as e: print(e)
 
-'''''''''''''''''''''''''''''''''
-RFI Survey Tasks - Chunnilal.D (AM)
-'''''''''''''''''''''''''''''''''
-user='chunnilal.d'
-Login()
-driver.find_element_by_xpath('//*[@id="rfi_survey_li"]/a').click()
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiSurveyFrequencyFilter"]').send_keys('2300')
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiSiteNameForFilter2300"]').send_keys(sapid)
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiStatusForFilterDiv2300"]/button').click()
-Scr()
+'''
 try:
-	driver.find_element_by_xpath('//*[@id="rfi_task_div_table_2300"]/tbody/tr/td[7]/a').click()
-	Scr()
-	driver.find_element_by_xpath('//*[@id="samsungSolParForRfi_2300.username"]').send_keys('Wipro Ltd')
-	Scr()
-	driver.find_element_by_xpath('//*[@id="samsungProjectManagerForRfi_2300.username"]').send_keys('Anoop Kumar')
-	Scr()
-	driver.find_element_by_xpath('//*[@id="assign_pm_for_rfi_btn_2300"]').click() #Commented for Assignment
-	Scr()
+    driver.find_element_by_xpath('//*[@id="small_cell_site_data_upload_modal"]').click() # Click Import Site
+    Scr()
+    driver.find_element_by_xpath("//*[@id='fileUploadInput']").send_keys(cwdpath+"/OSC Upload XLs/"+vndr+"/SCOImport"+vndr+".xlsx") #Upload File
+    Scr()
+    driver.find_element_by_xpath('//*[@id="small_cell_site_triggerUpload"]').click() # Click Upload # Commented for Uploading
+    Scr()
+
+    #Direct ATP 11A
+    driver.find_element_by_xpath('//*[@id="small_cell_atp11A_trigger_data_upload_modal"]').click() # Click ATP Trigger
+    Scr()
+    driver.find_element_by_xpath("//*[@id='fileUploadInput']").send_keys(cwdpath+"/OSC Upload XLs/"+vndr+"/SCOATP11A"+vndr+".xlsx") #Upload File
+    Scr()
+    driver.find_element_by_xpath("//input[@id='small_cell_atp11A_task_triggerUpload']").click() # Click Upload # Commented for Uploading
+    Scr()
 except:
-	pass
+    pass
 Logout()
+'''
 
-'''''''''''''''''''''''''''''''''
-RFI Survey Tasks - Anoop Kumar (PM)
-'''''''''''''''''''''''''''''''''
-user='anoop.k'
-Login()
-Scr()
-driver.find_element_by_xpath('//*[@id="rfi_survey_li"]/a').click()
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiSurveyFrequencyFilter"]').send_keys('2300')
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiSiteNameForFilter2300"]').send_keys(sapid)
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiStatusForFilterDiv2300"]/button').click()
-Scr()
-try:
-	driver.find_element_by_xpath('//*[@id="rfi_task_div_table_2300"]/tbody/tr/td[7]/a').click()
-	Scr()
-	driver.find_element_by_xpath('//*[@id="rfi_field_engineer_2300"]').send_keys('sanjay FE')
-	Scr()
-	driver.find_element_by_xpath('//*[@id="assignRFIFEButton_2300"]').click() #Commented for Assignment
-	Scr()
-except:
-	pass
-Logout()
-
-'''''''''''''''''''''''''''''''''
-RFI Survey Tasks - Sanjay FE (FE)
-'''''''''''''''''''''''''''''''''
-user='sanjayp'
-Login()
-Scr()
-driver.find_element_by_xpath('//*[@id="rfi_survey_li"]/a').click()
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiSurveyFrequencyFilter"]').send_keys('2300')
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiSiteNameForFilter2300"]').send_keys(sapid)
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiStatusForFilterDiv2300"]/button').click()
-Scr()
-Logout()
-ctypes.windll.user32.MessageBoxExW(0, 'Please Perform FE Task Manually on Web As Per Requirement and then Press [OK]', 'Khud Se Bharo', 0x1000)
-
-'''''''''''''''''''''''''''''''''
-RFI Survey Tasks - Chunnilal.D (AM)
-'''''''''''''''''''''''''''''''''
-user='chunnilal.d'
-Login()
-Scr()
-driver.find_element_by_xpath('//*[@id="rfi_survey_li"]/a').click()
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiSurveyFrequencyFilter"]').send_keys('2300')
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiSiteNameForFilter2300"]').send_keys(sapid)
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiStatusForFilterDiv2300"]/button').click()
-Scr()
-try:
-	driver.find_element_by_xpath('//*[@id="rfi_task_div_table_2300"]/tbody/tr[1]/td[7]/a[3]').click()
-	Scr()
-	driver.find_element_by_xpath('//*[@id="accepetedByAMWithGO"]').click()
-	Scr()
-	driver.find_element_by_xpath('//*[@id="areaManagerAcceptanceModalSubmitButton2300"]').click() #Commented for Assignment
-	Scr()
-except:
-	pass
-Logout()
-ctypes.windll.user32.MessageBoxExW(0, 'Please update JC in HeidiSQL and then Press [OK]', 'Khud Se Bharo', 0x1000)
-
-'''''''''''''''''''''''''''''''''
-RFI Survey Tasks - INAL.Admin (IL)
-'''''''''''''''''''''''''''''''''
-user='ianl.admin'
-Login()
-Scr()
-driver.find_element_by_xpath('//*[@id="rfi_survey_li"]/a').click()
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiSurveyFrequencyFilter"]').send_keys('2300')
-time.sleep(1)
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiSiteNameForFilter2300"]').send_keys(sapid)
-Scr()
-driver.find_element_by_xpath('//*[@id="rfiStatusForFilterDiv2300"]/button').click()
-Scr()
-try:
-	driver.find_element_by_xpath('//*[@id="rfi_task_div_table_2300"]/tbody/tr[1]/td[7]/a[3]').click() #Commented for Assignment
-	Scr()
-	Logout()
-except:
-	pass
-
-driver.close()
-driver.quit()
+#driver.close()
+#driver.quit()
