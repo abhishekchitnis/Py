@@ -3,23 +3,10 @@
 #Import Packages 
 import time
 import getpass
-import requests
 import pyautogui
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-
-# Check and Load/Download Chrome Driver Code
-user = getpass.getuser()
-chrdrv = "C:\\Users\\{0}\\Downloads\\chromedriver.exe".format(user)
-url = "http://www.muhurtnews.com/Abhishek/chromedriver.exe"
-if Path(chrdrv).is_file():
-	print()
-else:
-    r = requests.get(url, stream = True)
-    with open(chrdrv, 'wb') as f:
-        for chunk in r.iter_content(chunk_size=1024):
-            f.write(chunk)
 			
 # WebDriver Options
 opts = Options()
@@ -27,13 +14,13 @@ opts.add_argument('start-maximized')
 opts.add_argument('disable-infobars')
 
 #MacOS Extra
-opts.binary_location = '/Applications/Brave Browser Dev.app/Contents/MacOS/Brave Browser Dev'
+opts.binary_location = '/Applications/Microsoft Edge Dev.app/Contents/MacOS/Microsoft Edge Dev'
 chrdrv = '/usr/local/bin/chromedriver'
 
 driver = webdriver.Chrome(options=opts, executable_path=chrdrv)
 
 # WebDriver URL Load
-driver.get("http://www.google.com")
+driver.get("https://www.google.com")
 
 # Locate the Search TextBox
 search_field = driver.find_element_by_id("lst-ib")
