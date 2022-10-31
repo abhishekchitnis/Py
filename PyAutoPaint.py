@@ -1,29 +1,72 @@
-import pyautogui
-import time
+# Paint Draw Hut with Spiral Garage by Abhi
 
+#Importing Packages
+import pyautogui
+from time import sleep
+
+#Wait for No Reason
+sleep(2)
+
+#Display Mouse Position for No Reason
 print(pyautogui.position())
 
-pyautogui.moveTo(148, 767,0.5)
-pyautogui.click(148, 767, interval=0.50)
+#Open Paint for Some Reason
+pyautogui.press('win')
 pyautogui.typewrite('Paint', interval=0.05)
-time.sleep(2)
+sleep(1)
+pyautogui.press('enter')
 
-pyautogui.click(157, 263, interval=1.50)
-time.sleep(2)
+#Wait for No Reason
+sleep(2)
 
-x, y = pyautogui.locateCenterOnScreen('ic.png', grayscale=True)
-print(x, y)
+#Move Mouse To Position For Some Reason
+pyautogui.moveTo(226, 326)  
+
+#Clicking Mouse For XYZ Reason
+pyautogui.click()  # using .click() method to click
+l = 200 # setting values for no reason
+a = 4 # setting values for no reason
+x, y = pyautogui.position() # noting mouse position for some reason
+  
+#Making a Square First
+
+pyautogui.dragRel(200, 0, 0.2)
+x1, y1 = pyautogui.position()
+a -= 1
+pyautogui.dragRel(0, 200, 0.2)
+a -= 1
+pyautogui.dragRel(-200, 0, 0.2)
+a -= 1
+pyautogui.dragRel(0, -200, 0.2)
+a -= 1
+  
+#Making a Triangle Over the Square
 pyautogui.click(x, y)
+pyautogui.dragRel(100, -100, 0.2)
+pyautogui.click(x1, y1)
+pyautogui.dragRel(-100, -100, 0.2)
+  
+#Making Rest of the Body of the Hut
+pyautogui.dragRel(350, 0, 0.2)
+pyautogui.dragRel(0, 300, 0.2)
+pyautogui.dragRel(-290, 0, 0.2)
+pyautogui.click(x1, y1)
+pyautogui.dragRel(250, 0, 0.2)
 
-pyautogui.mouseDown(button='left', x=207, y=608)
-pyautogui.mouseDown(button='left', x=467, y=283)
-pyautogui.mouseDown(button='left', x=849, y=593)
-pyautogui.mouseUp(button='left', x=207, y=608)
+#Clicking and Setting Distance
+pyautogui.click()
+distance = 200
 
-pyautogui.alert(text='Triangle Drawn, Type Try in TextBox to Continue...', title='Triangle Drawn', button='OK')
-pwd=pyautogui.password(text='Triangle Drawn, Type in TextBox to Continue...', title='Triangle Drawn', default='', mask='*')
+#Adding Spiral Garage for No Reason
+while distance > 0:
+    pyautogui.dragRel(distance, 0, duration=0.2) # move right
+    distance = distance - 5
+    pyautogui.dragRel(0, distance, duration=0.2) # move down
 
-print(pwd)
+    pyautogui.dragRel(-distance, 0, duration=0.2) #move left
+    distance = distance - 5
+
+    pyautogui.dragRel(0, -distance, duration=0.2) #move up
 
 # https://pyautogui.readthedocs.io/en/latest/mouse.html
 # https://pyautogui.readthedocs.io/en/latest/keyboard.html
