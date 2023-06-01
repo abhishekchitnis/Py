@@ -24,3 +24,10 @@ text = extract_text("un.pdf")
 print(text)
 
 =========================================================================================
+
+# URLs to Study OCR :
+https://pyimagesearch.com/2020/09/07/ocr-a-document-form-or-invoice-with-tesseract-opencv-and-python/
+https://pyimagesearch.com/2020/08/31/image-alignment-and-registration-with-opencv/
+https://pyimagesearch.com/start-here/#working_with_video
+
+=========================================================================================
